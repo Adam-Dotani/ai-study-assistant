@@ -40,4 +40,4 @@ def extract_pdf_text(file_path):
         for page in reader.pages:
             text += page.extract_text() or ""
 
-    return " ".join(text.spliot())
+    return " ".join(text.split())

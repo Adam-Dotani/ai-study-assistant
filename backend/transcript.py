@@ -2,6 +2,7 @@ import os
 import re
 
 from youtube_transcript_api import YouTubeTranscriptApi
+import PyPDF2
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
 
@@ -29,3 +30,14 @@ def load_transcript(filename):
     path = os.path.join(DATA_DIR, filename)
     with open(path, encoding="utf-8") as f:
         return f.read()
+
+
+def extract_pdf_text(file_path):
+    text = ""
+
+    with open(file_path, "rb") as file:
+        reader = PyPDF2.PdfReader(file)
+        for page in reader.pages:
+            text += page.extract_text() or ""
+
+    return " ".join(text.spliot())

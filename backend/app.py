@@ -45,6 +45,19 @@ def load_ppt():
     return jsonify({"message": "Lecture extracted from PowerPoint successfully."})
 
 
+@app.route("/load_pdf", methods=["POST"])
+def load_pdf():
+    data = request.get_json()
+    if not data or "file_path" not in data:
+        return jsonify({"error": "Missing 'file path' " }), 400
+    
+    from transcript import extract_pdf_text
+    text = extract_pdf_text(data["file_path"])
+    save_transcript(text, "lecture.txt")
+
+    return jsonify({"message": "PDF loaded"})
+
+
 @app.route("/ask", methods=["POST"])
 def ask():
     data = request.get_json()
